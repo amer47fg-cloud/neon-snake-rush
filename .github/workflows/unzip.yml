@@ -4,8 +4,12 @@ jobs:
   unzip:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: unzip '*.zip' && rm -f *.zip
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: actions/checkout@v4
+      - name: Install unzip utility
+        run: sudo apt-get update && sudo apt-get install -y unzip
+      - name: Extract zip contents
+        run: unzip '*.zip' && rm -f *.zip
+      - name: Commit extracted files
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Unzip game files"
+          commit_message: "Extract game files automatically"
